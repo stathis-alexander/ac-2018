@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# This solves puzzle two of Advent of Code, Day 2.
 
 f = open('input.txt','r')
 
