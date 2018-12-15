@@ -12,8 +12,6 @@ for l in lines:
   line = list(l)
   line.sort()
   
-  print(line)
-  
   i = 0
   j = 1
   
