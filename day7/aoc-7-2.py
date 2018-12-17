@@ -15,29 +15,57 @@ for depends in dependencies:
   node_table[first].append(second)
 
 heads = []
-seen = []
+processing = []
+processed = []
 
 for letter in letters:
   if(not any([letter in node_table[key] for key in node_table])):
     heads.append(letter)
 
-for key in node_table:
-  print(key,":",node_table[key])
 
-while heads:
-  heads.sort(reverse=True)
-  head = heads.pop()
+for node in node_table:
+  print(node,":",node_table[node])
 
-  print(head,heads)
+time = 0
+workers = [["",0],["",0],["",0],["",0],["",0]]
 
-  if head in seen:
-    continue
+def working(workers):
+  if any([worker[1] >= 0 for worker in workers]) or heads:
+    return True
   else:
-    seen.append(head)
-  for x in node_table[head]: 
-    if(not any([(key not in seen) and (x in node_table[key]) for key in node_table])):
-      heads.append(x)
+    return False
+
+while working(workers):
+  print("time",time,":",heads,"::",workers)
+
+  # unload any processed
+  for worker in workers:
+    if worker[0] and worker[1] == 0: 
+      head = worker[0]
+      processing.remove(head)
+      processed.append(head)
+      for x in node_table[head]:
+        print("time",time,":",head,x)
+        if(x not in processing and not any([(key not in processed) and (x in node_table[key]) for key in node_table])):
+          heads.append(x)
+      worker[0] = ""
+
+  heads.sort(reverse=True)
+
+  for worker in workers:
+    if worker[1] <= 0 and heads:  
+      head = heads.pop()
+      processing.append(head)
+      worker[0] = head
+      worker[1] = ord(head)-4
   
   heads = list(set(heads))
 
-print(''.join(seen))
+  time += 1
+
+  for worker in workers:
+    worker[1] -= 1
+
+time -= 1
+
+print(''.join(processed),"in time",time)
