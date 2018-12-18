@@ -44,11 +44,17 @@ def build_children(data):
 root_node,data = build_children(data)
 
 def sum_meta_data(root_node):
-  meta_sum = sum(root_node.metadata)
+ 
+  if not root_node.children:
+    return sum(root_node.metadata)
+
+  value = 0
+
+  for child in root_node.metadata:
+    if(child-1 < len(root_node.children)):
+      value += sum_meta_data(root_node.children[child-1]) 
   
-  for child in root_node.children:
-    meta_sum += sum_meta_data(child)
-  return meta_sum
+  return value
 
 print(sum_meta_data(root_node))
 
