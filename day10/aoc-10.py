@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# This is a solution to Advent of Code, day 10 part 1.
+# This is a solution to Advent of Code, day 10 part 1 and part 2.
 
 with open("input.txt","r") as f:
   lines = [line.rstrip("\n") for line in f.readlines()]
@@ -24,7 +24,7 @@ for x in points_list:
   x[0][1] += x[1][1]*10081
 
 # guessed the correct time by checking when the x_min, x_max stopped strictly descreasing, then halfed it. I think the proper way to do this
-# would be to look for the time when the abs(x_min-x_max) and abs(y_min-y_max) was minimum 
+# would be to look for the time when the abs(x_min-x_max) and abs(y_min-y_max) was minimum. in any case, lucked into an answer for both parts
 
 
 points = set([tuple(x[0]) for x in points_list])
