@@ -33,7 +33,7 @@ for i in range(1,301):
 for i in range(1,300):
   for j in range(1,300):
     cube_power = grid[i][j]
-    for size in range(1,300-max(i,j)):
+    for size in range(1,min(20,300-max(i,j))):
       cube_power += sum([grid[i+size][j+v] for v in range(0,size)])
       cube_power += sum([grid[i+u][j+size] for u in range(0,size+1)])
       if cube_power > big_power:
@@ -42,4 +42,4 @@ for i in range(1,300):
         y_max = j
         cube_size = size
 
-print("(",x_max,",",y_max,"):", big_power)
+print("(",x_max,",",y_max,",",cube_size+1,"):", big_power)
