@@ -1,9 +1,9 @@
 #!/usr/bin/python
-# This is a solution to Advent of Code, day 13 part 1.
+# This is a solution to Advent of Code, day 13 part 2.
 
 grid = []
 
-with open("input.txt","r") as f:
+with open("input4.txt","r") as f:
   grid = [list(line.rstrip("\n")) for line in f.readlines()]
 
 carts = []
@@ -42,18 +42,19 @@ intersection = {
   }
 
 for i in range(len(grid)):
-  for j in range(len(grid[0])):
+  for j in range(len(grid[i])):
     if grid[i][j] in move_table:
       carts.append([i,j,grid[i][j],0])
 
-carts.sort()
-print(carts)
+tick = 0
 
-crash_location = []
+while len(carts) > 1:
 
-crash = False
-while not crash:
-  for i in range(len(carts)):
+  tick += 1
+  carts.sort()
+
+  i = 0
+  while i < len(carts):
     cart = carts[i]
     
     x = cart[0]
@@ -71,12 +72,15 @@ while not crash:
       last_move = (last_move + 1) % 3
 
     carts[i] = [x,y,cart_type,last_move]
-  
-    for j in range(len(carts)):
-      if i == j:
-        continue
-      if carts[i][0] == carts[j][0] and carts[i][1] == carts[j][1]:
-        crash = True
-        crash_location = [carts[i][1],carts[i][0]]
 
-print(crash_location)
+    for j in range(len(carts)):
+      if i != j and carts[i][0] == carts[j][0] and carts[i][1] == carts[j][1]:
+        carts.pop(max(j,i))
+        carts.pop(min(j,i))
+        if i > j:
+          i -= 1
+        i -= 1
+        break
+    i +=1
+
+print(carts[0][1],carts[0][0])
