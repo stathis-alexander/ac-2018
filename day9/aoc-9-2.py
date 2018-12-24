@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# This is a solution to Advent of Code, day 9 part 1.
+# This is a solution to Advent of Code, day 9 part 2.
 
 class CircleList:
   class Node:
